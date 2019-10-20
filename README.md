@@ -1,3 +1,2 @@
-# P🅰️RTS
+# Parts
 
-An exploration into P🅰️RTs
