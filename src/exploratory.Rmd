@@ -1,0 +1,63 @@
+---
+title: "Exploratory Data Analysis"
+output:
+  html_notebook: default
+---
+
+```{r}
+library(tidyverse)
+```
+
+# Introduction
+
+- I've actually forgotten most of the data collection
+- We have some hypotheses we want to test
+  - He says parts the less he understands the material. Perhaps as the semester progresses? Or perhaps we can _infer_ what parts of the course material he doesn't understand by fitting model?
+
+# Visualizations
+
+```{r}
+# Read in tidied data.
+col_types <- cols(
+  week.number = col_double(),
+  day = col_character(),
+  parts = col_double()
+)
+data <- read_csv("../data/tidy/parts.csv", col_types = col_types)
+```
+
+```{r}
+summary(data$parts)
+```
+
+
+```{r}
+# Visualize part counts for analysis and algebra, respectively.
+ggplot(data) +
+  geom_histogram(aes(parts, fill = day), position = "stack", binwidth = 5) +
+  facet_wrap(~ class)
+```
+
+```{r}
+# Visualize time dependence of parts!
+ggplot(data) +
+  geom_line(aes(x = week.number, y = parts, color = day)) +
+  facet_wrap(~ class)
+```
+
+# Notes and Observations
+
+1. The raw (untidied) data had NaNs (a.k.a. "non-finite values"): there are several possible reasons for these missing values:
+
+    1. The Flood (4th week of Modern Algebra)
+    1. Spring breaks (9th week of the spring semester)
+    1. Days with midterms or finals (when I too busy flunking the exam to keep count of the number of parts)
+    1. I missed the class?
+
+    In the first two cases, the missing days have been removed by `tidy_data.R`: `week.number` simply skips the appropriate week (e.g. it jumps from week 8 to 10 to reflect that the 9th week of the spring semester is spring break).
+
+1. Looking at the histogram, it doesn't look like there's any [zero-inflation](https://en.wikipedia.org/wiki/Zero-inflated_model) (i.e. there isn't a spike at 0, which one might expect). This is amazing: when we model the parts data, we will not need to give special consideration for days in which he said no parts!
+
+1. Since each lecture didn't have the same number of hours, some days have a different distribution of parts than others. Specifically, Friday lectures were two hours long, whereas all other lectures were one hour long. 
+
+1. There also looks like theres some decent dependence on time! This might lend some support to the joke/idea that as the semester went on, the less the professor understood the material he was delivering, and so the more parts there were.
