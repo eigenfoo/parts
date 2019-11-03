@@ -1,6 +1,8 @@
 ---
 title: "Exploratory Data Analysis"
 output:
+  html_document:
+    df_print: paged
   html_notebook: default
 ---
 
