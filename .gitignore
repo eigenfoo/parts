@@ -160,3 +160,7 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+
+# Ignore everything in the models/ directory except .stan files
+models/*
+!models/*.stan
