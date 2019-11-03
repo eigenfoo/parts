@@ -12,14 +12,14 @@ parameters {
 
 model {
   // Prior
-  lambda ~ normal(0, 10)
+  lambda ~ normal(0, 10);
 
   for (n in 1:N) {
-    non_friday_parts ~ poisson(lambda)
+    non_friday_parts ~ poisson(lambda);
   }
 
   for (m in 1:M) {
-    friday_parts ~ poisson(2*lambda)
+    friday_parts ~ poisson(2*lambda);
   }
 }
 
