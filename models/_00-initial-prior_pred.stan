@@ -1,5 +1,5 @@
 data {
-  int<lower=0> N;     // Number of iterations
+  int<lower=0> N;     // Number of samples
 }
 
 generated quantities {
@@ -11,7 +11,7 @@ generated quantities {
   int prior_pred_non_friday_parts[N];
 
   for (n in 1:N) {
-    prior_pred_friday_parts[n] = poisson_rng(lambda);
+    prior_pred_non_friday_parts[n] = poisson_rng(lambda);
   }
   for (n in 1:N) {
     prior_pred_friday_parts[n] = poisson_rng(2*lambda);

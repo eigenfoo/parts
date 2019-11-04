@@ -1,10 +1,8 @@
-.PHONY: help venv black
+.PHONY: help venv black-style pylint-style black lint clean
 .DEFAULT_GOAL = help
 
 PYTHON = python3
 PIP = pip3
-CONDA = conda
-SHELL = bash
 
 help:
 	@printf "Usage:\n"
@@ -36,3 +34,8 @@ black:  # Format code in-place using black.
 	black src/
 
 lint: black-style pylint-style  # Lint code using black and pylint.
+
+clean:
+	find models/ ! -name '*.stan' -type f -exec rm -rf {} +
+	find src/ -type d -name "__pycache__" -exec rm -rf {} +
+	find src/ -type d -name "__pycache__" -delete

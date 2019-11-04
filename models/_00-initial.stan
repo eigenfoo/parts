@@ -24,5 +24,5 @@ model {
 }
 
 generated quantities {
-  // Posterior predictive
+  // TODO sample from posterior predictive
 }
