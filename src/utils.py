@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from cmdstanpy import cmdstan_path, CmdStanModel
 
 
 LIGHT = "#DCBCBC"
@@ -8,6 +9,23 @@ MID = "#B97C7C"
 MID_HIGHLIGHT = "#A25050"
 DARK = "#8F2727"
 DARK_HIGHLIGHT = "#7C0000"
+
+
+def run_stan_model(stan_file, data, **kwargs):
+    """
+    Convenience function to compile, sample and diagnose a Stan model.
+    
+    Notes
+    -----
+    For prior predictive sampling (or to otherwise
+    simulate data), pass `fixed_param=True`.
+    https://cmdstanpy.readthedocs.io/en/latest/sample.html#example-generate-data-fixed-param-true
+    """
+    model = CmdStanModel(stan_file=stan_file)
+    model.compile()
+    fit = model.sample(data=data, **kwargs)
+    fit.diagnose()
+    return model, fit
 
 
 def plot_percentiles(

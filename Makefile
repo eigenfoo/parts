@@ -2,7 +2,7 @@
 .DEFAULT_GOAL = help
 
 PYTHON = python3
-PIP = pip3
+PIP = pip
 
 help:
 	@printf "Usage:\n"
